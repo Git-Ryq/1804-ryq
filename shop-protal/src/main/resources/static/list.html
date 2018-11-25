@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品展示</title>
+    <!-- Bootstrap -->
+    <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--datetimepicker-->
+    <link rel="stylesheet" href="js/bootstrap-datetime/css/bootstrap-datetimepicker.min.css" type="text/css">
+    <%--fileinput--%>
+    <link href="js/bootstrap-fileinput-master/css/fileinput.min.css" rel="stylesheet">
+    <link href="js/bootstrap-fileinput-master/css/fileinput-rtl.min.css"  type="text/css" />
+    <%--validator--%>
+    <link href="js/validator/dist/css/bootstrapValidator.min.css" rel="stylesheet" />s
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    商品
+                </div>
+
+                <table id="productListDiv" class="table table-bordered">
+                    <tr>
+                        <th>商品名</th>
+                        <th>商品价格</th>
+                        <th>品牌名</th>
+                    </tr>
+
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="js/jquery-1.12.4.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="js/bootstrap/js/bootstrap.min.js"></script>
+<%--fileinput--%>
+<script src="js/bootstrap-fileinput-master/js/fileinput.min.js" type="text/javascript"></script>
+<script src="js/bootstrap-fileinput-master/js/locales/zh.js" type="text/javascript"></script>
+<%--validator--%>
+<script src="js/validator/dist/js/bootstrapValidator.min.js"></script>
+<script src="js/validator/dist/js/language/zh_CN.js"></script>
+<script>
+    $(function() {
+        initProductList();
+    })
+  function initProductList() {
+        $.ajax({
+            type:"get",
+            url:"/brands",
+            success:function (result) {
+                if (result.code == 200) {
+                    var v_productList =  result.data;
+
+                    for (var i = 0; i < v_productList.length; i++) {
+                        var v_tr = "<tr>";
+                        v_tr+="<td>"+v_productList[i].goodsName+"</td>";
+                        v_tr+="<td>"+v_productList[i].goodsPrice+"</td>";
+                        v_tr+="<td>"+v_productList[i].brandName+"</td>";
+                        v_tr+="</tr>";
+                        $("#productListDiv").append(v_tr);
+                    }
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
